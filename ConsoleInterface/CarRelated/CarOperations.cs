@@ -23,7 +23,7 @@ namespace CarManager.ConsoleInterface.CarRelated
             string model = Console.ReadLine().ToUpper();
 
             var car = GlobalConfig.Connection.CreateCar(plateNumber, producer, model);
-           
+
             Console.WriteLine();
             Console.WriteLine();
 
@@ -55,12 +55,14 @@ namespace CarManager.ConsoleInterface.CarRelated
             {
                 Console.WriteLine("The ID was in invalid format. Please insert a number");
                 Console.ReadLine();
-                    return;
+                return;
             }
 
             GlobalConfig.Connection.DeleteCar(intQuery);
 
             Console.WriteLine("You've deleted the car successfully.");
+            Console.WriteLine(); Console.WriteLine();
+            Console.WriteLine("Press enter to continue...");
             Console.ReadLine();
 
         }
@@ -70,11 +72,11 @@ namespace CarManager.ConsoleInterface.CarRelated
             Console.WriteLine();
 
             GrabCarsData();
-           
+
             Console.WriteLine();
             Console.WriteLine();
 
-            Console.WriteLine("Press any button to continue...");
+            Console.WriteLine("Press enter to continue...");
             Console.ReadLine();
         }
         private static void GrabCarsData()
@@ -118,6 +120,9 @@ namespace CarManager.ConsoleInterface.CarRelated
             {
                 Console.WriteLine($"{car.ID} | {car.PlateNumber} | {car.Producer} | {car.Model} || Owner: {car.Owner.FirstName} {car.Owner.LastName}");
             }
+
+            Console.WriteLine(); Console.WriteLine();
+            Console.WriteLine("Press enter to continue...");
             Console.ReadLine();
         }
         public static void DisplayCarsByPlateNumber()
@@ -134,7 +139,7 @@ namespace CarManager.ConsoleInterface.CarRelated
                 Console.ReadLine();
                 return;
             }
-            foreach( Car car in cars)
+            foreach (Car car in cars)
             {
                 if (car.Owner == null)
                 {
@@ -143,11 +148,12 @@ namespace CarManager.ConsoleInterface.CarRelated
                 else
                 {
                     Console.WriteLine($"{car.ID} | {car.PlateNumber} | {car.Producer} | {car.Model} || Owner: {car.Owner.FirstName} {car.Owner.LastName}");
-                }       
+                }
             }
-            Console.WriteLine();
-            Console.WriteLine("Press any key to continue");
-            Console.ReadKey();
+
+            Console.WriteLine(); Console.WriteLine();
+            Console.WriteLine("Press enter to continue...");
+            Console.ReadLine();
         }
         public static void DisplayCarsByProducer()
         {
@@ -174,9 +180,10 @@ namespace CarManager.ConsoleInterface.CarRelated
                     Console.WriteLine($"{car.ID} | {car.PlateNumber} | {car.Producer} | {car.Model} || Owner: {car.Owner.FirstName} {car.Owner.LastName}");
                 }
             }
-            Console.WriteLine();
-            Console.WriteLine("Press any key to continue");
-            Console.ReadKey();
+
+            Console.WriteLine(); Console.WriteLine();
+            Console.WriteLine("Press enter to continue...");
+            Console.ReadLine();
         }
         public static void DisplayCarsByModel()
         {
@@ -203,9 +210,10 @@ namespace CarManager.ConsoleInterface.CarRelated
                     Console.WriteLine($"{car.ID} | {car.PlateNumber} | {car.Producer} | {car.Model} || Owner: {car.Owner.FirstName} {car.Owner.LastName}");
                 }
             }
-            Console.WriteLine();
-            Console.WriteLine("Press any key to continue");
-            Console.ReadKey();
+
+            Console.WriteLine(); Console.WriteLine();
+            Console.WriteLine("Press enter to continue...");
+            Console.ReadLine();
         }
         public static void ConnectCarToOwner()
         {
@@ -216,7 +224,7 @@ namespace CarManager.ConsoleInterface.CarRelated
 
             bool validOwnerID = int.TryParse(ownerQuery, out int ownerID);
             bool validCarID = int.TryParse(carQuery, out int carID);
-            
+
             if (validOwnerID == false)
             {
                 Console.WriteLine("No such Owner ID in DatatBase");
@@ -231,6 +239,106 @@ namespace CarManager.ConsoleInterface.CarRelated
             GlobalConfig.Connection.SetOrChangeCarOwner(ownerID, carID);
 
             Console.WriteLine("New Connection has been set");
+
+            Console.WriteLine(); Console.WriteLine();
+            Console.WriteLine("Press enter to continue...");
+            Console.ReadLine();
+        }
+        public static void DetachCarFromOwner()
+        {
+            Console.Write("Insert ID of the Car: ");
+            string carQuery = Console.ReadLine();
+
+            bool validCarID = int.TryParse(carQuery, out int carID);
+
+            if (validCarID == false)
+            {
+                Console.WriteLine("No such Car ID in DatatBase");
+                return;
+            }
+
+            var car = GlobalConfig.Connection.DisconnectCarAndOwner(carID);
+
+            Console.WriteLine($"{car.Producer} {car.Model} (Plate number: {car.PlateNumber}) has no owner since now");
+
+            Console.WriteLine(); Console.WriteLine();
+            Console.WriteLine("Press enter to continue");
+            Console.ReadLine();
+        }
+        public static void ChangePlateNumber()
+        {
+
+            Console.WriteLine("Insert ID of the car");
+            string carQuery = Console.ReadLine();
+            Console.Write("Insert new PlateNumber: ");
+            string plateNumber = Console.ReadLine();
+
+            bool validCarID = int.TryParse(carQuery, out int carID);
+
+            if (validCarID == false)
+            {
+                Console.WriteLine("No such Car ID in DatatBase");
+                return;
+            }
+
+
+            var car = GlobalConfig.Connection.ChangeCarPlateNumber(carID, plateNumber);
+
+            Console.WriteLine(); Console.WriteLine();
+            Console.WriteLine($"{car.Producer} {car.Model} with ID of {car.ID} has now new plate number: {car.PlateNumber}");
+
+            Console.WriteLine(); Console.WriteLine();
+            Console.WriteLine("Press enter to continue...");
+            Console.ReadLine();
+        }
+        public static void ChangeProducer()
+        {
+            Console.WriteLine("Insert ID of the car");
+            string carQuery = Console.ReadLine();
+            Console.Write("Insert new Producer Name: ");
+            string carProducer = Console.ReadLine();
+
+            bool validCarID = int.TryParse(carQuery, out int carID);
+
+            if (validCarID == false)
+            {
+                Console.WriteLine("No such Car ID in DatatBase");
+                return;
+            }
+
+
+            var car = GlobalConfig.Connection.ChangeCarProducer(carID, carProducer);
+
+            Console.WriteLine(); Console.WriteLine();
+            Console.WriteLine($"Car with ID: {car.ID} and plate number: {car.PlateNumber} has a new producer name in the DataBase ({car.Producer}). ");
+
+            Console.WriteLine(); Console.WriteLine();
+            Console.WriteLine("Press enter to continue...");
+            Console.ReadLine();
+        }
+        public static void ChangeModel()
+        {
+            Console.WriteLine("Insert ID of the car");
+            string carQuery = Console.ReadLine();
+            Console.Write("Insert new Model: ");
+            string carModel = Console.ReadLine();
+
+            bool validCarID = int.TryParse(carQuery, out int carID);
+
+            if (validCarID == false)
+            {
+                Console.WriteLine("No such Car ID in DatatBase");
+                return;
+            }
+
+
+            var car = GlobalConfig.Connection.ChangeCarModel(carID, carModel);
+
+            Console.WriteLine(); Console.WriteLine();
+            Console.WriteLine($"Car with ID: {car.ID} and plate number: {car.PlateNumber} has a new model name in the DataBase ({car.Model}). ");
+
+            Console.WriteLine(); Console.WriteLine();
+            Console.WriteLine("Press enter to continue...");
             Console.ReadLine();
         }
     }

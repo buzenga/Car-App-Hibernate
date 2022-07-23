@@ -26,14 +26,16 @@ namespace CarManager
         public List<Car> GetAllCars();
         public List<Owner> GetAllOwners();
         public Owner SetOrChangeCarOwner(int ownerID, int carID);
+        public Car DisconnectCarAndOwner(int carID);
         public Owner GetOwnerByID(int ownerID);
         public List<Owner> GetOwnerByFirstName(string firstName);
+        public List<Owner> GetOwnerByLastName(string lastName);
         public Car GetCarByID(int carID);
         public List<Car> GetCarsByPlateNumber (string plateNumber);
         public List<Car> GetCarsByProducer(string producer);
         public List<Car> GetCarsByModel(string model);
         public Car ChangeCarPlateNumber(int carID, string plateNumber);
-        public Car ChangeCarPlateProducer(int carID, string carProducer);
+        public Car ChangeCarProducer(int carID, string carProducer);
         public Car ChangeCarModel(int carID, string carModel);
         public Owner ChangeOwnerFirstName(int ownerID, string ownerFirstName);
         public Owner ChangeOwnerLastName(int ownerID, string ownerLastName);

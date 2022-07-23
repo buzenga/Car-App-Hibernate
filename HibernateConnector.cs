@@ -146,7 +146,7 @@ namespace CarManager
             }
 
             ///// do usuniecia
-            Console.WriteLine($"{owner.ID} {owner.FirstName} {owner.LastName} {owner.Cars.Count}");
+            //Console.WriteLine($"{owner.ID} {owner.FirstName} {owner.LastName} {owner.Cars.Count}");
 
 
             return owner; 
@@ -215,7 +215,7 @@ namespace CarManager
             return car;
         }
 
-        public Car ChangeCarPlateProducer(int carID, string carProducer)
+        public Car ChangeCarProducer(int carID, string carProducer)
         {
             Car car;
             using (GlobalConfig.mySession.BeginTransaction())
@@ -343,6 +343,44 @@ namespace CarManager
                 GlobalConfig.mySession.Delete(owner);
                 GlobalConfig.mySession.Transaction.Commit();
             }
+        }
+
+        public Car DisconnectCarAndOwner(int carID)
+        {
+            Car car;
+
+            using (GlobalConfig.mySession.BeginTransaction())
+            {
+                car = GlobalConfig.mySession.Get<Car>(carID);
+                if (car == null)
+                {
+                    Console.WriteLine("No such Car in DataBase");
+                    return null;
+                }
+                int ownerID = car.Owner.ID;
+                var owner = GlobalConfig.mySession.Get<Owner>(ownerID);
+
+                owner.Cars.Remove(car);
+                car.Owner = null;
+
+                GlobalConfig.mySession.Update(car);
+                GlobalConfig.mySession.Transaction.Commit();
+            }
+            return car;
+        }
+
+        public List<Owner> GetOwnerByLastName(string lastName)
+        {
+            List<Owner> output = null;
+            using (GlobalConfig.mySession.BeginTransaction())
+            {
+                ICriteria criteria = GlobalConfig.mySession.CreateCriteria<Owner>();
+                IList<Owner> owners = criteria.List<Owner>().Where(x => x.LastName.Contains(lastName.ToUpper())).ToList();
+
+                output = (List<Owner>)owners;
+                GlobalConfig.mySession.Transaction.Commit();
+            }
+            return output;
         }
     }
 }

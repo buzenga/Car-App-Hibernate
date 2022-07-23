@@ -36,7 +36,6 @@ namespace CarManager.ConsoleInterface.CarRelated
         {
             switch (currentMode)
             {
-                /*case 0: Console.Clear(); CarsService.AddNewCar(); break;*/
                 case 0: Console.Clear(); CarOperations.DisplayCarByID() ; break;
                 case 1: Console.Clear(); CarOperations.DisplayCarsByPlateNumber(); break;
                 case 2: Console.Clear(); CarOperations.DisplayCarsByProducer(); break;

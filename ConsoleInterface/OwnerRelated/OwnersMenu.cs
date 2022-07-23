@@ -13,7 +13,6 @@ namespace CarManager.ConsoleInterface.OwnerRelated
             "Remove owner",
             "Display all owners",
             "Find owners",
-            "Attach car to an owner",
             "Change owner's data",
             "Back" };
 
@@ -37,14 +36,12 @@ namespace CarManager.ConsoleInterface.OwnerRelated
         {
             switch (currentMode)
             {
-                /*case 0: Console.Clear(); CarsService.AddNewCar(); break;*/
-                case 0: Console.Clear(); Console.WriteLine("craete"); Console.ReadLine(); break;
-                case 1: Console.Clear(); Console.WriteLine("remove"); Console.ReadLine(); break;
-                case 2: Console.Clear(); Console.WriteLine("display"); Console.ReadLine(); break;
-                case 3: Console.Clear(); Console.WriteLine("find"); Console.ReadLine(); break;
-                case 4: Console.Clear(); Console.WriteLine("attach"); Console.ReadLine(); break;
-                case 5: Console.Clear(); Console.WriteLine("change"); Console.ReadLine(); break;
-                case 6: break;
+                case 0: Console.Clear(); OwnersOperations.CreateOwner(); break;
+                case 1: Console.Clear(); OwnersOperations.RemoveOwner(); break;
+                case 2: Console.Clear(); OwnersOperations.DisplayAllOwners(); break;
+                case 3: Console.Clear(); FindOwnersMenu.StartFindOwnersMenu(); break;
+                case 4: Console.Clear(); ChangeOwnersDataMenu.StartChangeOwnersDataMenu(); break;
+                case 5: break;
             }
             return false;
         }

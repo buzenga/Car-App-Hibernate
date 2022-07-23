@@ -6,20 +6,17 @@ using System.Threading.Tasks;
 
 namespace CarManager.ConsoleInterface.CarRelated
 {
-    public class CarsMenu
+    public class ChangeCarsPropertyMenu
     {
         static string[] availableOptions = {
-            "Create car",
-            "Remove car",
-            "Display all cars",
-            "Find cars",
-            "Attach car to an owner",
-            "Detach car from owner",
-            "Change car's property",
-            "Back" };
+            "Change Plate Number",
+            "Change Producer Name",
+            "Change Model",
+            "Back"
+        };
 
         static int currentMode = 0;
-        public static void StartCarsMenu()
+        public static void StartChangeCarsPropertyMenu()
         {
             bool running = true;
             while (running == true)
@@ -38,14 +35,10 @@ namespace CarManager.ConsoleInterface.CarRelated
         {
             switch (currentMode)
             {
-                case 0: Console.Clear(); CarOperations.CreateCar(); break;
-                case 1: Console.Clear(); CarOperations.RemoveCar(); break;
-                case 2: Console.Clear(); CarOperations.DisplayAllCars(); break;
-                case 3: Console.Clear(); FindCarsMenu.StartFindCarsMenu(); break;
-                case 4: Console.Clear(); CarOperations.ConnectCarToOwner(); break;
-                case 5: Console.Clear(); CarOperations.DetachCarFromOwner(); break;
-                case 6: Console.Clear(); ChangeCarsPropertyMenu.StartChangeCarsPropertyMenu(); break;
-                case 7: break;
+                case 0: Console.Clear(); CarOperations.ChangePlateNumber(); break;
+                case 1: Console.Clear(); CarOperations.ChangeProducer(); break;
+                case 2: Console.Clear(); CarOperations.ChangeModel(); break;
+                case 3: break;
             }
             return false;
         }
